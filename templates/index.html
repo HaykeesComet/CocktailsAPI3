@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block content %}
+<form action="{{ url_for('drinks.search') }}" method="get">
+    <input type="text" name="q" placeholder="Search for a drink...">
+    <button type="submit">Search</button>
+</form>
+
+{% if drinks %}
+    <div class="drinks">
+        {% for drink in drinks %}
+            <div class="drink">
+                <a href="{{ url_for('drinks.drink', drink_id=drink.idDrink) }}">
+                    <img class="drink-thumbnail" src="{{ drink.strDrinkThumb }}" alt="{{ drink.strDrink }}">
+                    <h3>{{ drink.strDrink }}</h3>
+                </a>
+                {% if current_user.is_authenticated %}
+                    <form action="{{ url_for('drinks.favorite', drink_id=drink.idDrink) }}" method="post">
+                        <button type="submit">Add to Favorites</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

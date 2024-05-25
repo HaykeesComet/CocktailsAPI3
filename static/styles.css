@@ -1,0 +1,146 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: red;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Arial Bold', Arial, sans-serif;
+    text-align: center;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+}
+
+/* Navigation Styles */
+nav {
+    background-color: #333;
+    color: white;
+    width: 100%;
+    padding: 10px 0;
+}
+
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+/* Form Styles */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="submit"],
+form button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+/* Drink Styles */
+.drink {
+    margin-bottom: 20px;
+}
+
+/* Thumbnail Drink Styles */
+.drink-thumbnail {
+    width: 100px;  /* Adjust the width to your desired thumbnail size */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Single Drink Styles */
+.single-drink img {
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
+.single-drink h2, .single-drink p {
+    margin: 10px 0;
+}
+
+/* Favorite Drink Styles */
+.favorites {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.favorites .drink {
+    margin: 10px;
+    max-width: 200px;
+}
+
+.favorites img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .drink-thumbnail {
+        width: 80px; /* Adjust for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    nav a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .drink-thumbnail {
+        width: 60px; /* Adjust for very small screens */
+    }
+}
+
+
+/* Container for drink items */
+.drinks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the drinks horizontally */
+    gap: 20px; /* Add space between drink items */
+    padding: 20px;
+}
+
+/* Individual drink item */
+.drink {
+    background-color: #f4f4f4; /* Light background color */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.drink img {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px auto;
+}

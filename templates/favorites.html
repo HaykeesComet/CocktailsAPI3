@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h2>Your Favorite Drinks, {{ current_user.username }}</h2>
+<div class="favorites">
+    {% for favorite in favorites %}
+        <div class="drink">
+            <a href="{{ url_for('drinks.drink', drink_id=favorite.drink_id) }}">
+                <img src="{{ favorite.drink_image }}" alt="{{ favorite.drink_name }}">
+                <h3>{{ favorite.drink_name }}</h3>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

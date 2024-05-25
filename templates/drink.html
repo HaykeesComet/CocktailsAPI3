@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="single-drink">
+    <img src="{{ drink.strDrinkThumb }}" alt="{{ drink.strDrink }}">
+    <h2>{{ drink.strDrink }}</h2>
+    <p>{{ drink.strInstructions }}</p>
+    {% if current_user.is_authenticated %}
+        <form action="{{ url_for('drinks.favorite', drink_id=drink.idDrink) }}" method="post">
+            <button type="submit">Add to Favorites</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}
