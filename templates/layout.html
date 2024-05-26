@@ -29,6 +29,14 @@
             {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
-    </div>    
+    </div>
+
+    <!-- JavaScript to handle browser back/forward button -->
+    <script>
+        window.addEventListener('popstate', function(event) {
+            // Force the page to reload on back/forward navigation
+            window.location.reload();
+        });
+    </script>
 </body>
 </html>
