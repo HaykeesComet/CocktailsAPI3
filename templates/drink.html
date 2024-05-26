@@ -5,9 +5,54 @@
     <h2>{{ drink.strDrink }}</h2>
     <p>{{ drink.strInstructions }}</p>
     {% if current_user.is_authenticated %}
-        <form action="{{ url_for('drinks.favorite', drink_id=drink.idDrink) }}" method="post">
-            <button type="submit">Add to Favorites</button>
+        <form id="favorite-form" action="{{ url_for('drinks.favorite', drink_id=drink.idDrink) }}" method="post">
+            <button type="submit" id="favorite-button">Add to Favorites</button>
         </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const favoriteButton = document.getElementById('favorite-button');
+                const drinkId = '{{ drink.idDrink }}';
+                const localStorageKey = `favorite_${drinkId}`;
+
+                // Check localStorage for favorite status
+                const storedFavoriteStatus = localStorage.getItem(localStorageKey);
+                if (storedFavoriteStatus === 'favorited') {
+                    favoriteButton.innerText = 'Favorited';
+                }
+
+                // Fetch the initial favorite status from the server
+                fetch("{{ url_for('drinks.is_favorited', drink_id=drink.idDrink) }}")
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.favorited) {
+                            favoriteButton.innerText = 'Favorited';
+                            localStorage.setItem(localStorageKey, 'favorited');
+                        } else {
+                            localStorage.setItem(localStorageKey, 'not_favorited');
+                        }
+                    });
+
+                document.getElementById('favorite-form').addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    fetch(this.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({})
+                    }).then(response => response.json())
+                      .then(data => {
+                          if (data.status === 'added') {
+                              favoriteButton.innerText = 'Favorited';
+                              localStorage.setItem(localStorageKey, 'favorited');
+                          } else if (data.status === 'removed') {
+                              favoriteButton.innerText = 'Add to Favorites';
+                              localStorage.setItem(localStorageKey, 'not_favorited');
+                          }
+                      });
+                });
+            });
+        </script>
     {% endif %}
 </div>
 {% endblock %}
