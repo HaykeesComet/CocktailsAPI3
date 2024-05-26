@@ -144,3 +144,26 @@ form button {
     display: block;
     margin: 0 auto 10px auto;
 }
+
+/* Flash Messages Styles */
+.flashes {
+    list-style-type: none;  /* Removes the bullet points */
+    padding: 0;             /* Removes padding from the list */
+}
+
+.flashes li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+/* Category specific styles for flash messages (optional) */
+.flashes .success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.flashes .error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
