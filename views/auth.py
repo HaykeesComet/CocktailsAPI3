@@ -14,19 +14,30 @@ def login():
         if user and check_password_hash(user.password, form.password.data):
             login_user(user)
             return redirect(url_for('drinks.index'))
-        flash('Invalid username or password')
+        flash('Invalid username or password', 'error')  # Added 'error' category here
     return render_template('login.html', form=form)
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        existing_user = User.query.filter_by(username=form.username.data).first()
+        if existing_user:
+            flash('Username is already taken or registered', 'error')
+            return render_template('register.html', form=form)
+
         hashed_password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
         new_user = User(username=form.username.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
         return redirect(url_for('drinks.index'))
+    
+    # Flash form validation errors
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(f"Error in the {getattr(form, field).label.text} field - {error}", 'error')
+    
     return render_template('register.html', form=form)
 
 @auth_bp.route('/logout')
