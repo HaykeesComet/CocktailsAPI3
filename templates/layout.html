@@ -16,8 +16,8 @@
             <a href="{{ url_for('drinks.index') }}" class="logo home-link">Home</a>
             <div class="nav-links" id="nav-links">
                 {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('auth.logout') }}">❌ Logout</a>
-                    <a href="{{ url_for('drinks.favorites') }}">👊 Favorites</a>
+                    <a href="{{ url_for('auth.logout') }}">Logout&nbsp;&nbsp;❌</a>
+                    <a href="{{ url_for('drinks.favorites') }}">Favorites&nbsp;&nbsp;👊</a>
                 {% else %}
                     <a href="{{ url_for('auth.login') }}">✔ Login</a>
                     <a href="{{ url_for('auth.register') }}">✔ Register</a>
