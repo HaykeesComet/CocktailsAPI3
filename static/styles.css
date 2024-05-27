@@ -132,6 +132,12 @@ form input[type="submit"],
     margin: 10px 0;
 }
 
+.ingredients-list {
+    list-style-type: none; /* Removes bullet points */
+    padding: 0; /* Removes padding */
+    margin: 0; /* Removes margin */
+}
+
 /* Favorite Drink Styles */
 .favorites {
     display: flex;

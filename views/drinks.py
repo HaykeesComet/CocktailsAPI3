@@ -23,11 +23,20 @@ def drink(drink_id):
     response = requests.get(f'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={drink_id}')
     drink = response.json().get('drinks')[0]
     
+    # Extract ingredients and measurements
+    ingredients = []
+    for i in range(1, 16):  # Assuming there can be up to 15 ingredients
+        ingredient = drink.get(f'strIngredient{i}')
+        measure = drink.get(f'strMeasure{i}')
+        if ingredient:
+            ingredients.append((ingredient, measure))
+    
     is_favorited = False
     if current_user.is_authenticated:
         is_favorited = Favorite.query.filter_by(user_id=current_user.id, drink_id=drink_id).first() is not None
     
-    return render_template('drink.html', drink=drink, is_favorited=is_favorited)
+    return render_template('drink.html', drink=drink, ingredients=ingredients, is_favorited=is_favorited)
+
 
 @drinks_bp.route('/favorite/<drink_id>', methods=['POST'])
 @login_required

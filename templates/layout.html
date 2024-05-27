@@ -16,11 +16,11 @@
             <a href="{{ url_for('drinks.index') }}" class="logo home-link">Home</a>
             <div class="nav-links" id="nav-links">
                 {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('auth.logout') }}">Logout</a>
-                    <a href="{{ url_for('drinks.favorites') }}">Favorites</a>
+                    <a href="{{ url_for('auth.logout') }}">❌ Logout</a>
+                    <a href="{{ url_for('drinks.favorites') }}">👊 Favorites</a>
                 {% else %}
-                    <a href="{{ url_for('auth.login') }}">Login</a>
-                    <a href="{{ url_for('auth.register') }}">Register</a>
+                    <a href="{{ url_for('auth.login') }}">✔ Login</a>
+                    <a href="{{ url_for('auth.register') }}">✔ Register</a>
                 {% endif %}
             </div>
             <div class="hamburger" id="hamburger">

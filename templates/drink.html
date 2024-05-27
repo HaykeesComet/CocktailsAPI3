@@ -3,7 +3,17 @@
 <div class="single-drink">
     <img src="{{ drink.strDrinkThumb }}" alt="{{ drink.strDrink }}">
     <h2>{{ drink.strDrink }}</h2>
+
+    <h3>Ingredients</h3>
+    <ul class="ingredients-list">
+        {% for ingredient, measure in ingredients %}
+            <li>{{ measure }} {{ ingredient }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Instructions</h3>
     <p>{{ drink.strInstructions }}</p>
+
     {% if current_user.is_authenticated %}
         <form id="favorite-form" action="{{ url_for('drinks.favorite', drink_id=drink.idDrink) }}" method="post">
             <button type="submit" id="favorite-button">Add to Favorites</button>
@@ -14,7 +24,6 @@
                 const drinkId = '{{ drink.idDrink }}';
                 const localStorageKey = `favorite_${drinkId}`;
 
-                // Function to update button appearance
                 function updateButtonAppearance(favorited) {
                     if (favorited) {
                         favoriteButton.innerText = 'Favorited';
@@ -25,13 +34,11 @@
                     }
                 }
 
-                // Check localStorage for favorite status
                 const storedFavoriteStatus = localStorage.getItem(localStorageKey);
                 if (storedFavoriteStatus === 'favorited') {
                     updateButtonAppearance(true);
                 }
 
-                // Fetch the initial favorite status from the server
                 fetch("{{ url_for('drinks.is_favorited', drink_id=drink.idDrink) }}")
                     .then(response => response.json())
                     .then(data => {
