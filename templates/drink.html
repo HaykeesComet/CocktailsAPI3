@@ -14,10 +14,21 @@
                 const drinkId = '{{ drink.idDrink }}';
                 const localStorageKey = `favorite_${drinkId}`;
 
+                // Function to update button appearance
+                function updateButtonAppearance(favorited) {
+                    if (favorited) {
+                        favoriteButton.innerText = 'Favorited';
+                        favoriteButton.classList.add('favorited');
+                    } else {
+                        favoriteButton.innerText = 'Add to Favorites';
+                        favoriteButton.classList.remove('favorited');
+                    }
+                }
+
                 // Check localStorage for favorite status
                 const storedFavoriteStatus = localStorage.getItem(localStorageKey);
                 if (storedFavoriteStatus === 'favorited') {
-                    favoriteButton.innerText = 'Favorited';
+                    updateButtonAppearance(true);
                 }
 
                 // Fetch the initial favorite status from the server
@@ -25,7 +36,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.favorited) {
-                            favoriteButton.innerText = 'Favorited';
+                            updateButtonAppearance(true);
                             localStorage.setItem(localStorageKey, 'favorited');
                         } else {
                             localStorage.setItem(localStorageKey, 'not_favorited');
@@ -43,10 +54,10 @@
                     }).then(response => response.json())
                       .then(data => {
                           if (data.status === 'added') {
-                              favoriteButton.innerText = 'Favorited';
+                              updateButtonAppearance(true);
                               localStorage.setItem(localStorageKey, 'favorited');
                           } else if (data.status === 'removed') {
-                              favoriteButton.innerText = 'Add to Favorites';
+                              updateButtonAppearance(false);
                               localStorage.setItem(localStorageKey, 'not_favorited');
                           }
                       });

@@ -29,10 +29,40 @@ nav {
     padding: 10px 0;
 }
 
-nav a {
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
     color: white;
-    margin: 0 15px;
     text-decoration: none;
+}
+
+/* Home link specific styles */
+.home-link {
+    font-weight: bold;
+    color: red;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
 }
 
 /* Form Styles */
@@ -99,26 +129,27 @@ form button {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .container {
-        padding: 10px;
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
     }
 
-    .drink-thumbnail {
-        width: 80px; /* Adjust for smaller screens */
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
     }
 }
 
 @media (max-width: 480px) {
-    nav a {
+    .nav-links a {
         display: block;
         margin: 5px 0;
     }
-
-    .drink-thumbnail {
-        width: 60px; /* Adjust for very small screens */
-    }
 }
-
 
 /* Container for drink items */
 .drinks {
@@ -166,4 +197,9 @@ form button {
 .flashes .error {
     background-color: #f8d7da;
     color: #721c24;
+}
+
+/* Favorite buttons */
+button.favorited {
+    background-color: lightpink;
 }

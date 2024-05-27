@@ -30,17 +30,28 @@
             const drinkId = button.getAttribute('data-drink-id');
             const localStorageKey = `favorite_${drinkId}`;
 
+            // Function to update button appearance
+            function updateButtonAppearance(button, favorited) {
+                if (favorited) {
+                    button.innerText = 'Favorited';
+                    button.classList.add('favorited');
+                } else {
+                    button.innerText = 'Add to Favorites';
+                    button.classList.remove('favorited');
+                }
+            }
+
             // Check localStorage for favorite status
             const storedFavoriteStatus = localStorage.getItem(localStorageKey);
             if (storedFavoriteStatus === 'favorited') {
-                button.innerText = 'Favorited';
+                updateButtonAppearance(button, true);
             }
 
             fetch(`/is_favorited/${drinkId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.favorited) {
-                        button.innerText = 'Favorited';
+                        updateButtonAppearance(button, true);
                         localStorage.setItem(localStorageKey, 'favorited');
                     } else {
                         localStorage.setItem(localStorageKey, 'not_favorited');
@@ -58,10 +69,10 @@
                 }).then(response => response.json())
                   .then(data => {
                       if (data.status === 'added') {
-                          button.innerText = 'Favorited';
+                          updateButtonAppearance(button, true);
                           localStorage.setItem(localStorageKey, 'favorited');
                       } else if (data.status === 'removed') {
-                          button.innerText = 'Add to Favorites';
+                          updateButtonAppearance(button, false);
                           localStorage.setItem(localStorageKey, 'not_favorited');
                       }
                   });
