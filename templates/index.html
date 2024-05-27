@@ -1,8 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
 <form action="{{ url_for('drinks.search') }}" method="get">
-    <input type="text" name="q" placeholder="Search for a drink...">
-    <button type="submit">Search</button>
+    <input type="text" name="q" placeholder="Type here...">
+    <button type="submit">Search for your spirit!</button>
 </form>
 
 {% if drinks %}

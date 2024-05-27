@@ -1,6 +1,6 @@
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Reddit Sans", sans-serif;
     background-color: red;
     margin: 0;
     padding: 0;
@@ -10,8 +10,13 @@ body {
     text-align: center;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Arial Bold', Arial, sans-serif;
+h1 {
+    font-family: "Major Mono Display", monospace;
+    text-align: center;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: "Josefin Sans", sans-serif;
     text-align: center;
 }
 
@@ -48,6 +53,7 @@ nav {
 
 /* Home link specific styles */
 .home-link {
+    font-size: x-large;
     font-weight: bold;
     color: red;
 }
@@ -77,12 +83,28 @@ form div {
 
 form input[type="text"],
 form input[type="password"],
-form input[type="submit"],
-form button {
+form input[type="submit"] {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
     box-sizing: border-box;
+}
+
+form button {
+    width: 80%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    font-family: "Reddit Sans", sans-serif;
+    font-weight: bold;
+    color: red;
+}
+
+/* Specific button styles for Search, Login, Register */
+form input[type="submit"],
+.nav-links a {
+    width: 33.33%; /* Set the width to 33.33% of the original */
+    font-family: "Reddit Sans", sans-serif;
 }
 
 /* Drink Styles */
