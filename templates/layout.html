@@ -19,8 +19,8 @@
                     <a href="{{ url_for('auth.logout') }}">Logout&nbsp;&nbsp;❌</a>
                     <a href="{{ url_for('drinks.favorites') }}">Favorites&nbsp;&nbsp;👊</a>
                 {% else %}
-                    <a href="{{ url_for('auth.login') }}">✔ Login</a>
-                    <a href="{{ url_for('auth.register') }}">✔ Register</a>
+                    <a href="{{ url_for('auth.login') }}">Login&nbsp;&nbsp;✔</a>
+                    <a href="{{ url_for('auth.register') }}">Register&nbsp;&nbsp;✔</a>
                 {% endif %}
             </div>
             <div class="hamburger" id="hamburger">
