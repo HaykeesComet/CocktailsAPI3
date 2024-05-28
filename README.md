@@ -4,6 +4,8 @@
 
 Drink Up! is a web application built with Python, Flask, PostgreSQL, and SQLAlchemy that allows users to search for cocktail recipes and manage their favorite drinks. Users can register, log in, and save their favorite drinks to a personalized list. This project utilizes the CocktailDB API to fetch cocktail data.
 
+Site deployed: [https://cocktailsapi3.onrender.com/](https://cocktailsapi3.onrender.com/)
+
 ### Features
 
 * **User Authentication** : Users can register, log in, and log out using secure password hashing.
