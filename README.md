@@ -1,9 +1,15 @@
-
 # Drink Up! Cocktail API Search
 
 ## Project Overview
 
 Drink Up! is a web application built with Python, Flask, PostgreSQL, and SQLAlchemy that allows users to search for cocktail recipes and manage their favorite drinks. Users can register, log in, and save their favorite drinks to a personalized list. This project utilizes the CocktailDB API to fetch cocktail data.
+
+### Features
+
+* **User Authentication** : Users can register, log in, and log out using secure password hashing.
+* **Search Cocktails** : Users can search for cocktails using the CocktailDB API and view details of selected cocktails.
+* **Favorite Management** : Registered users can add cocktails to their favorites and view their favorite cocktails list.
+* **Dynamic Content Rendering** : The application dynamically renders cocktail data and manages favorites using embedded JavaScript code.
 
 ![1716887999837](image/README/1716887999837.png)
 
@@ -174,6 +180,59 @@ DrinkUp/
     └── styles.css        # CSS styles
 ```
 
+### Files Description
+
+1. **app.py**
+   * Initializes the Flask application, configures the database, and registers blueprints for authentication and drinks.
+2. **config.py**
+   * Contains the configuration for the Flask application, including secret keys and database URI.
+3. **models.py**
+   * Defines the database models for User and Favorite using SQLAlchemy.
+4. **forms.py**
+   * Defines WTForms for user login and registration.
+5. **views/auth.py**
+   * Handles routes for user authentication including login, registration, and logout.
+6. **views/drinks.py**
+   * Manages routes for searching cocktails, viewing details, and managing favorites.
+7. **templates/**
+   * Contains HTML templates for rendering the web pages.
+8. **static/styles.css**
+   * CSS file for styling the application.
+9. **seed.py**
+   * Seeds the database with initial data.
+10. **run.py**
+    * Script to run the Flask application.
+11. **cocktail_seed.sql**
+    * SQL script for creating the database schema.
+12. **requirements.txt**
+    * Lists the Python dependencies required for the project.
+
+### Key Functionality
+
+* **User Authentication**
+  * `auth_bp`: Blueprint for authentication routes.
+  * `LoginForm`, `RegisterForm`: WTForms for login and registration.
+  * User model with secure password hashing using `werkzeug.security`.
+* **Cocktail Search and Details**
+  * `drinks_bp`: Blueprint for drink-related routes.
+  * Integrates with the CocktailDB API to fetch cocktail data.
+  * Dynamic rendering of cocktail details and ingredients.
+* **Favorite Management**
+  * Allows users to add and remove favorite cocktails.
+  * Favorite cocktails are displayed on the user's favorites page.
+
+### Usage
+
+* **Register and Login**
+  * Users can register with a username and password.
+  * After logging in, users can search for cocktails and manage their favorites.
+* **Searching Cocktails**
+  * Use the search bar on the home page to find cocktails by name.
+  * Click on a cocktail to view its details, including ingredients and instructions.
+* **Managing Favorites**
+  * Logged-in users can add cocktails to their favorites list.
+  * Favorites can be accessed and managed through the favorites page.
+
 ## Technologies Used
 
 - **Backend:** Python, Flask, SQLAlchemy
@@ -181,4 +240,8 @@ DrinkUp/
 - **Frontend:** HTML, CSS, JavaScript
 - **APIs:** CocktailDB API
 
-This project serves as a robust starting point for developing more complex web applications using Flask and PostgreSQL, with a clean structure and modular design for easy expansion and maintenance.
+### Conclusion
+
+The CocktailsAPI application provides a seamless experience for users to discover and manage their favorite cocktails. Built with Python, Flask and PostgreSQL, it leverages secure user authentication and dynamic content rendering to deliver a robust and user-friendly interface.
+
+This project serves as a robust starting point for developing more complex web applications using Python, Flask, SQLAlchemy and PostgreSQL, with a clean structure and modular design for easy expansion and maintenance.
