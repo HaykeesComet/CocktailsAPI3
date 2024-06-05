@@ -1,9 +1,12 @@
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify, flash
-from flask_login import login_required, current_user
+# drinks.py
 import requests
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, flash, current_app
+from flask_login import login_required, current_user
 from models import db, Favorite
 
 drinks_bp = Blueprint('drinks', __name__)
+
+COCKTAIL_API_URL = 'https://www.thecocktaildb.com/api/json/v1/1'
 
 @drinks_bp.route('/')
 def index():
@@ -13,30 +16,35 @@ def index():
 def search():
     query = request.args.get('q')
     if query:
-        response = requests.get(f'https://www.thecocktaildb.com/api/json/v1/1/search.php?s={query}')
-        drinks = response.json().get('drinks')
+        try:
+            response = requests.get(f'{COCKTAIL_API_URL}/search.php?s={query}')
+            response.raise_for_status()  # Raises an error for bad status codes
+            drinks = response.json().get('drinks')
+        except requests.RequestException as e:
+            current_app.logger.error(f"Error fetching drinks: {e}")
+            flash('There was an error contacting the drink API. Please try again later.', 'error')
+            drinks = None
         return render_template('index.html', drinks=drinks)
     return redirect(url_for('drinks.index'))
 
 @drinks_bp.route('/drink/<drink_id>')
 def drink(drink_id):
-    response = requests.get(f'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={drink_id}')
-    drink = response.json().get('drinks')[0]
+    try:
+        response = requests.get(f'{COCKTAIL_API_URL}/lookup.php?i={drink_id}')
+        response.raise_for_status()  # Raises an error for bad status codes
+        drink = response.json().get('drinks')[0]
+    except requests.RequestException as e:
+        current_app.logger.error(f"Error fetching drink details: {e}")
+        flash('There was an error contacting the drink API. Please try again later.', 'error')
+        return redirect(url_for('drinks.index'))
     
-    # Extract ingredients and measurements
-    ingredients = []
-    for i in range(1, 16):  # Assuming there can be up to 15 ingredients
-        ingredient = drink.get(f'strIngredient{i}')
-        measure = drink.get(f'strMeasure{i}')
-        if ingredient:
-            ingredients.append((ingredient, measure))
-    
+    ingredients = [(drink.get(f'strIngredient{i}'), drink.get(f'strMeasure{i}')) for i in range(1, 16) if drink.get(f'strIngredient{i}')]
+
     is_favorited = False
     if current_user.is_authenticated:
         is_favorited = Favorite.query.filter_by(user_id=current_user.id, drink_id=drink_id).first() is not None
     
     return render_template('drink.html', drink=drink, ingredients=ingredients, is_favorited=is_favorited)
-
 
 @drinks_bp.route('/favorite/<drink_id>', methods=['POST'])
 @login_required
@@ -47,13 +55,20 @@ def favorite(drink_id):
         db.session.commit()
         return jsonify({'status': 'removed'})
     else:
-        response = requests.get(f'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={drink_id}')
-        drink = response.json().get('drinks')[0]
+        try:
+            response = requests.get(f'{COCKTAIL_API_URL}/lookup.php?i={drink_id}')
+            response.raise_for_status()  # Raises an error for bad status codes
+            drink = response.json().get('drinks')[0]
+        except requests.RequestException as e:
+            current_app.logger.error(f"Error fetching drink details for favorite: {e}")
+            flash('There was an error contacting the drink API. Please try again later.', 'error')
+            return jsonify({'status': 'error'}), 500
+        
         new_favorite = Favorite(user_id=current_user.id, drink_id=drink_id, drink_name=drink['strDrink'], drink_image=drink['strDrinkThumb'])
         db.session.add(new_favorite)
         db.session.commit()
         return jsonify({'status': 'added'})
-    
+
 @drinks_bp.route('/is_favorited/<drink_id>', methods=['GET'])
 @login_required
 def is_favorited(drink_id):
